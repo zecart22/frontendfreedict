@@ -13,9 +13,23 @@ import {
   Box,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { ModalWordDetails } from "../../components/modalWordDetails";
+import React, { useEffect, useState } from "react";
+import { ModalWordDetails } from "../modalWordDetails";
 
 export const WordTable = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        console.log("Sentry appears!", currentPage + 1);
+        setCurrentPage((currentValue) => currentValue + 1);
+      }
+    });
+    intersectionObserver.observe(document.querySelector("#sentry"));
+    return () => intersectionObserver.disconnect();
+  }, []);
+
   const arrayWords = [
     "Hello",
     "World",
@@ -107,7 +121,13 @@ export const WordTable = () => {
               />
             </HStack>
 
-            <Box border={"1px"} borderColor={"theme.black"} bg="theme.white">
+            <Box
+              border={"1px"}
+              borderColor={"theme.black"}
+              bg="theme.white"
+              overflowY={"scroll"}
+              h={"300px"}
+            >
               <Wrap
                 m={[5, 5, 5, 5]}
                 spacing="0px"
@@ -115,7 +135,7 @@ export const WordTable = () => {
                 bg="theme.white"
               >
                 {arrayWords &&
-                  arrayWords.map((word: string) => (
+                  arrayWords.map((word) => (
                     <WrapItem>
                       <Center
                         h="40px"
@@ -129,6 +149,7 @@ export const WordTable = () => {
                       </Center>
                     </WrapItem>
                   ))}
+                <Box id="sentry" />
               </Wrap>
             </Box>
           </VStack>
@@ -168,7 +189,12 @@ export const WordTable = () => {
             <Text fontWeight={"bold"} fontSize={20}>
               Word List
             </Text>
-            <Box borderColor={"theme.black"} bg="theme.white">
+            <Box
+              borderColor={"theme.black"}
+              bg="theme.white"
+              overflowY={"scroll"}
+              h={"300px"}
+            >
               <Wrap
                 m={[5, 5, 5, 5]}
                 spacing="0px"
@@ -176,7 +202,7 @@ export const WordTable = () => {
                 bg="theme.white"
               >
                 {arrayWords &&
-                  arrayWords.map((word: string) => (
+                  arrayWords.map((word) => (
                     <WrapItem>
                       <Center
                         h="40px"
@@ -190,6 +216,7 @@ export const WordTable = () => {
                       </Center>
                     </WrapItem>
                   ))}
+                <Box id="sentry" />
               </Wrap>
             </Box>
           </VStack>
