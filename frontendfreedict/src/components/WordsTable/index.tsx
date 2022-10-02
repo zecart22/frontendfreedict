@@ -13,6 +13,7 @@ import {
   Box,
   useMediaQuery,
 } from "@chakra-ui/react";
+import { ModalWordDetails } from "../../components/modalWordDetails";
 
 export const WordTable = () => {
   const arrayWords = [
@@ -185,7 +186,7 @@ export const WordTable = () => {
                         border={"1px"}
                         borderColor={"gray.300"}
                       >
-                        {word}
+                        <ModalWordDetails word={word} />
                       </Center>
                     </WrapItem>
                   ))}
