@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Input } from "../../Input";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,8 +34,7 @@ export const LoginForm = () => {
 
   const toast = useToast();
 
-  /*  Auth de login */
-  /* const { signIn } = useAuth(); */
+  const { signIn } = useAuth();
 
   const {
     formState: { errors },
@@ -44,9 +44,7 @@ export const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  /*  função de login */
-
-  /* const handleLogin = (data: LoginDataProps) => {
+  const handleLogin = (data: LoginDataProps) => {
     signIn(data)
       .then((response) => {
         console.log(response);
@@ -64,7 +62,7 @@ export const LoginForm = () => {
         onOpen();
         setTimeout(onClose, 2000);
       });
-  }; */
+  };
 
   return (
     <>
@@ -114,7 +112,7 @@ export const LoginForm = () => {
             boxShadow={"md"}
             type={"submit"}
             _hover={{ color: "white", bg: "gray.200" }}
-            /*  onClick={handleSubmit(handleLogin as any)} */
+            onClick={handleSubmit(handleLogin as any)}
           >
             Entrar
           </Button>

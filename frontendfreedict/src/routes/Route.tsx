@@ -19,7 +19,7 @@ export const Route = ({
     <ReactRoute
       {...rest}
       render={() =>
-        isPrivate === !!accessToken ? (
+        isPrivate === !!token ? (
           <Component />
         ) : (
           <Redirect to={isPrivate ? "/" : "/dashboard"} />

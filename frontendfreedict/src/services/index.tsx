@@ -5,5 +5,5 @@ export const dictionaryapi = axios.create({
 });
 
 export const api = axios.create({
-  baseURL: "localhost:3333",
+  baseURL: "http://localhost:3333",
 });

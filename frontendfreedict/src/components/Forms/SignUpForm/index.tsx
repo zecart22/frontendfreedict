@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
-
+import { useAuth } from "../../../contexts/AuthContext";
 import { api } from "../../../services";
 
 interface SignUpDataProps {
@@ -27,6 +27,7 @@ const signupSchema = yup.object().shape({
 
 export const SignupForm = () => {
   const history = useHistory();
+  const { singnUp } = useAuth();
 
   const {
     formState: { errors },
@@ -37,12 +38,8 @@ export const SignupForm = () => {
   });
 
   const toast = useToast();
-
-  /*  função para cadastro */
-
-  /* const handleSignup = (data: SignUpDataProps) => {
-    api
-      .post("/users", data)
+  const handleSignup = (data: SignUpDataProps) => {
+    singnUp(data)
       .then((response) => {
         console.log(response);
         toast({
@@ -58,7 +55,7 @@ export const SignupForm = () => {
       .catch((err) => {
         console.log(err);
       });
-  }; */
+  };
 
   return (
     <Center
@@ -112,7 +109,7 @@ export const SignupForm = () => {
           borderColor={"theme.grafit"}
           boxShadow={"md"}
           type={"submit"}
-          /*  onClick={handleSubmit(handleSignup as any)} */
+          onClick={handleSubmit(handleSignup as any)}
         >
           Cadastrar
         </Button>

@@ -20,9 +20,16 @@ interface SignInCredentials {
   password: string;
 }
 
+interface SignUpCredentials {
+  name: string;
+  email: string;
+  password: string;
+}
+
 interface AuthContextData {
   accessToken: string;
   signIn: (credentials: SignInCredentials) => Promise<void>;
+  singnUp: (credentials: SignUpCredentials) => Promise<void>;
   signOut: () => void;
 }
 
@@ -49,7 +56,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   });
 
   const signIn = useCallback(async ({ email, password }: SignInCredentials) => {
-    const response = await api.post("/session", { email, password });
+    const response = await api.post("/login", { email, password });
 
     const { accessToken } = response.data;
     localStorage.setItem("@MySimpleRestaurant:accessToken", accessToken);
@@ -59,6 +66,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     setData({ accessToken });
   }, []);
+
+  const singnUp = useCallback(
+    async ({ email, password, name }: SignUpCredentials) => {
+      const response = await api.post("/users", { email, password, name });
+    },
+    []
+  );
 
   const signOut = useCallback(() => {
     window.localStorage.clear();
@@ -72,6 +86,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         accessToken: data.accessToken,
         signIn,
         signOut,
+        singnUp,
       }}
     >
       {children}
