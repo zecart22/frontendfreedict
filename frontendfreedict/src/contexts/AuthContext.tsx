@@ -59,7 +59,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const response = await api.post("/login", { email, password });
 
     const { accessToken } = response.data;
-    localStorage.setItem("@MySimpleRestaurant:accessToken", accessToken);
+    localStorage.setItem("@FreeDict:accessToken", accessToken);
     window.localStorage.setItem("@AcessToken", response.data.token);
     window.localStorage.setItem("@AcessUserID", response.data.id);
     window.localStorage.setItem("@AcessUserEmail", response.data.email);

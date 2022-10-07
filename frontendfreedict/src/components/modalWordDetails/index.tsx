@@ -25,6 +25,7 @@ export const ModalWordDetails = ({ word }: WordProps) => {
         _hover={{
           borderColor: "theme.white",
         }}
+        fontSize={["20px", "12.5px"]}
       >
         {word}
       </Button>

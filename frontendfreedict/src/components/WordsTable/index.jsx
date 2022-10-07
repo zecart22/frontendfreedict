@@ -13,11 +13,66 @@ import {
   Box,
   useMediaQuery,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ModalWordDetails } from "../modalWordDetails";
+
+import { api } from "../../services";
 
 export const WordTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataWords, setDataWords] = useState([]);
+
+  const take = "28";
+  const skip = "5";
+
+  const token = localStorage.getItem("@AcessToken");
+  const user_id = localStorage.getItem("@AcessUserID");
+
+  const loadWords = useCallback(async () => {
+    try {
+      const response = await api.get(
+        `/list/all/words?take=${take}&skip=${skip}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setDataWords(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const loadFavoritesWords = useCallback(async () => {
+    try {
+      const response = await api.get(
+        `/list/all/favorites/words?user_id=${user_id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setDataWords(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const loadHistoricalWords = useCallback(async () => {
+    try {
+      const response = await api.get(
+        `/list/all/historical/words?user_id=${user_id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setDataWords(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadWords();
+  }, []);
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
@@ -30,58 +85,10 @@ export const WordTable = () => {
     return () => intersectionObserver.disconnect();
   }, []);
 
-  const arrayWords = [
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-    "Hello",
-    "World",
-    "Hello",
-    "Perfect",
-    "Hello",
-    "World",
-    "Wonderfull",
-    "World",
-  ];
-
   const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
+
+  console.log(dataWords);
+  console.log(user_id);
   return (
     <>
       {isLargerThan1302 ? (
@@ -98,6 +105,7 @@ export const WordTable = () => {
                 borderBottomColor={"theme.white"}
                 color={"gray"}
                 w={"125px"}
+                onClick={loadWords}
               />
               <Button
                 children={"Favorites"}
@@ -108,6 +116,7 @@ export const WordTable = () => {
                 borderBottomColor={"theme.white"}
                 color={"gray"}
                 w={"125px"}
+                onClick={loadFavoritesWords}
               />
               <Button
                 children={"History"}
@@ -118,6 +127,7 @@ export const WordTable = () => {
                 borderBottomColor={"theme.white"}
                 color={"gray"}
                 w={"125px"}
+                onClick={loadHistoricalWords}
               />
             </HStack>
 
@@ -134,18 +144,20 @@ export const WordTable = () => {
                 w={["200px", "280px", "380px", "480px"]}
                 bg="theme.white"
               >
-                {arrayWords &&
-                  arrayWords.map((word) => (
+                {dataWords &&
+                  dataWords.map((word) => (
                     <WrapItem>
                       <Center
                         h="40px"
-                        w={["100px", "120px"]}
+                        w={["100px", "150px"]}
                         bg="theme.white"
                         color={"theme.black"}
                         border={"1px"}
-                        borderColor={"gray.300"}
+                        borderColor={"gray.100"}
+                        fontSize={"14px"}
+                        padding={"8px"}
                       >
-                        {word}
+                        {word.word}
                       </Center>
                     </WrapItem>
                   ))}
@@ -166,6 +178,7 @@ export const WordTable = () => {
                 borderColor={"theme.black"}
                 color={"gray"}
                 w={["80px", "125px"]}
+                onClick={loadWords}
               />
               <Button
                 children={"Favorites"}
@@ -175,6 +188,7 @@ export const WordTable = () => {
                 borderColor={"theme.black"}
                 color={"gray"}
                 w={["80px", "125px"]}
+                onClick={loadFavoritesWords}
               />
               <Button
                 children={"History"}
@@ -184,6 +198,7 @@ export const WordTable = () => {
                 borderColor={"theme.black"}
                 color={"gray"}
                 w={["80px", "125px"]}
+                onClick={loadHistoricalWords}
               />
             </HStack>
             <Text fontWeight={"bold"} fontSize={20}>
@@ -201,18 +216,18 @@ export const WordTable = () => {
                 w={["200px", "280px", "380px", "480px"]}
                 bg="theme.white"
               >
-                {arrayWords &&
-                  arrayWords.map((word) => (
+                {dataWords &&
+                  dataWords.map((word) => (
                     <WrapItem>
                       <Center
                         h="40px"
-                        w={["100px", "120px"]}
+                        w={["200px", "120px"]}
                         bg="theme.white"
                         color={"theme.black"}
                         border={"1px"}
-                        borderColor={"gray.300"}
+                        borderColor={"gray.100"}
                       >
-                        <ModalWordDetails word={word} />
+                        <ModalWordDetails word={word.word} />
                       </Center>
                     </WrapItem>
                   ))}
