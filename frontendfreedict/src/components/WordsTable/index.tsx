@@ -9,6 +9,7 @@ import {
   Box,
   useMediaQuery,
   CircularProgress,
+  Input,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useCallback } from "react";
 import { InfiniteScroll } from "../InfiniteScroll";
@@ -33,8 +34,10 @@ export const WordTable = () => {
   const [showAllWords, setShowAllWords] = useState(true);
   const [showAllFavoriteWords, setShowAllFavoriteWords] = useState(false);
   const [showAllHistoricalWords, setShowAllHistoricalWords] = useState(false);
+  const [wordId, setWordId] = useState("");
   const token = localStorage.getItem("@AcessToken");
   const user_id = localStorage.getItem("@AcessUserID");
+
   const skip = 50;
   const limit = take;
 
@@ -98,6 +101,36 @@ export const WordTable = () => {
     }
   }, []);
 
+  const sendToHistoricalWords = useCallback(async (wId: string) => {
+    try {
+      const response = await api.post(
+        `/send/word/historical?word_id=${wId}&user_id=${user_id}`
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const clearHistoricalWords = useCallback(async () => {
+    try {
+      const response = await api.delete(`/clear/historical`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      loadHistoricalWords();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const sendToHistocalData = (word_id: string) => {
+    loadHistoricalWords();
+    setWordId((previousWord: string) => (previousWord = word_id));
+    sendToHistoricalWords(word_id);
+    loadHistoricalWords();
+  };
+
   const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
 
   useEffect(() => {
@@ -111,6 +144,8 @@ export const WordTable = () => {
   useEffect(() => {
     loadHistoricalWords();
   }, []);
+
+  console.log(wordId);
 
   return (
     <>
@@ -173,6 +208,7 @@ export const WordTable = () => {
                       dataWords.map((word) => (
                         <WrapItem>
                           <Center
+                            as="button"
                             h="40px"
                             w={["100px", "150px"]}
                             bg="theme.white"
@@ -181,6 +217,7 @@ export const WordTable = () => {
                             borderColor={"gray.100"}
                             fontSize={"14px"}
                             padding={"8px"}
+                            onClick={() => sendToHistocalData(word.id)}
                           >
                             {word.word}
                           </Center>
@@ -251,6 +288,21 @@ export const WordTable = () => {
                 <></>
               )}
             </Box>
+            {showAllHistoricalWords ? (
+              <>
+                <Button
+                  children={"Limpar Histórico"}
+                  fontSize={"12px"}
+                  borderRadius={"0px"}
+                  bg={"theme.white"}
+                  color={"gray"}
+                  w={"125px"}
+                  onClick={clearHistoricalWords}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </VStack>
         </>
       ) : (
@@ -309,12 +361,14 @@ export const WordTable = () => {
                       dataWords.map((word) => (
                         <WrapItem>
                           <Center
+                            as={"button"}
                             h="40px"
                             w={["200px", "120px"]}
                             bg="theme.white"
                             color={"theme.black"}
                             border={"1px"}
                             borderColor={"gray.100"}
+                            onClick={() => sendToHistocalData(word.id)}
                           >
                             <ModalWordDetails word={word.word} />
                           </Center>
@@ -381,6 +435,21 @@ export const WordTable = () => {
                 <></>
               )}
             </Box>
+            {showAllHistoricalWords ? (
+              <>
+                <Button
+                  children={"Limpar Histórico"}
+                  fontSize={"12px"}
+                  borderRadius={"0px"}
+                  bg={"theme.white"}
+                  color={"gray"}
+                  w={"125px"}
+                  onClick={clearHistoricalWords}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </VStack>
         </>
       )}
