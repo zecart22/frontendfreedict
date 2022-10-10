@@ -57,6 +57,7 @@ export const WordTable = () => {
     setShowAllHistoricalWords(true);
     setShowAllFavoriteWords(false);
     setShowAllWords(false);
+    loadHistoricalWords();
   };
 
   const loadWords = useCallback(async (limit: number) => {
@@ -125,7 +126,6 @@ export const WordTable = () => {
   }, []);
 
   const sendToHistocalData = (word_id: string) => {
-    loadHistoricalWords();
     setWordId((previousWord: string) => (previousWord = word_id));
     sendToHistoricalWords(word_id);
     loadHistoricalWords();
