@@ -14,13 +14,17 @@ import { WordDetails } from "../../components/WordDetails";
 interface WordProps {
   word: string;
   wordId: string;
+  favoriteWordId: string;
   sendToFavoriteData: (word_id: string, word: string) => void;
+  removeFavoritesWord: (word_id: string) => void;
 }
 
 export const ModalWordDetails = ({
   word,
   wordId,
+  favoriteWordId,
   sendToFavoriteData,
+  removeFavoritesWord,
 }: WordProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -44,8 +48,10 @@ export const ModalWordDetails = ({
           <ModalBody>
             <WordDetails
               sendToFavoriteData={sendToFavoriteData}
+              removeFavoritesWord={removeFavoritesWord}
               word={word}
               wordId={wordId}
+              favoriteWordId={favoriteWordId}
             ></WordDetails>
           </ModalBody>
 

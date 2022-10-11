@@ -19,6 +19,8 @@ import { WordDetails } from "../WordDetails";
 import { api } from "../../services";
 
 interface WordsResponse {
+  wordsData: any;
+  favoriteWordId: any;
   id: string;
   word: string;
 }
@@ -36,6 +38,7 @@ export const WordTable = () => {
   const [showAllFavoriteWords, setShowAllFavoriteWords] = useState(false);
   const [showAllHistoricalWords, setShowAllHistoricalWords] = useState(false);
   const [wordId, setWordId] = useState("");
+  const [favoriteWordId, setFavoriteWordId] = useState("");
   const [word, setWord] = useState("");
   const token = localStorage.getItem("@AcessToken");
   const user_id = localStorage.getItem("@AcessUserID");
@@ -79,6 +82,7 @@ export const WordTable = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      console.log(response.data);
       setDataFavoriteWords(response.data);
     } catch (err) {
       console.log(err);
@@ -89,6 +93,22 @@ export const WordTable = () => {
     try {
       const response = await api.post(
         `/send/word/favorite?word_id=${wId}&user_id=${user_id}`
+      );
+      console.log(response);
+      loadFavoritesWords();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const removeFavoritesWord = useCallback(async (wId: string) => {
+    try {
+      const response = await api.delete(
+        `/remove/word/favorite?favoriteWord_id=${wId}`,
+
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       console.log(response);
       loadFavoritesWords();
@@ -151,11 +171,16 @@ export const WordTable = () => {
     }
   }, []);
 
-  const sendToHistocalData = (word_id: string, word_word: string) => {
+  const sendToHistocalData = (
+    word_id: string,
+    word_word: string,
+    id: string
+  ) => {
     sendToHistoricalWords(word_id);
     loadHistoricalWords();
     setWordId(word_id);
     setWord(word_word);
+    setFavoriteWordId(id);
   };
 
   const handleAllHistoricalWords = () => {
@@ -180,7 +205,9 @@ export const WordTable = () => {
           <WordDetails
             wordId={wordId}
             word={word}
+            favoriteWordId={favoriteWordId}
             sendToFavoriteData={sendToFavoriteData}
+            removeFavoritesWord={removeFavoritesWord}
           />
           <VStack spacing={0} alignItems={"normal"}>
             <HStack>
@@ -250,8 +277,11 @@ export const WordTable = () => {
                               borderColor={"gray.100"}
                               fontSize={"14px"}
                               padding={"8px"}
+                              _hover={{
+                                borderColor: "black",
+                              }}
                               onClick={() =>
-                                sendToHistocalData(word.id, word.word)
+                                sendToHistocalData(word.id, word.word, "")
                               }
                             >
                               {word.word}
@@ -279,6 +309,9 @@ export const WordTable = () => {
                             borderColor={"gray.100"}
                             fontSize={"14px"}
                             padding={"8px"}
+                            _hover={{
+                              borderColor: "black",
+                            }}
                           >
                             {word.word}
                           </Center>
@@ -300,11 +333,18 @@ export const WordTable = () => {
                             borderColor={"gray.100"}
                             fontSize={"14px"}
                             padding={"8px"}
+                            _hover={{
+                              borderColor: "black",
+                            }}
                             onClick={() =>
-                              sendToHistocalData(word.id, word.word)
+                              sendToHistocalData(
+                                word.wordsData.id,
+                                word.wordsData.word,
+                                word.favoriteWordId
+                              )
                             }
                           >
-                            {word.word}
+                            {word.wordsData.word}
                           </Center>
                         </WrapItem>
                       ))}
@@ -338,6 +378,17 @@ export const WordTable = () => {
                   color={"gray"}
                   w={"125px"}
                   onClick={clearHistoricalWords}
+                />
+              </>
+            ) : showAllFavoriteWords ? (
+              <>
+                <Button
+                  children={"Limpar Favoritos"}
+                  fontSize={"12px"}
+                  borderRadius={"0px"}
+                  bg={"theme.white"}
+                  color={"gray"}
+                  w={"125px"}
                 />
               </>
             ) : (
@@ -409,13 +460,15 @@ export const WordTable = () => {
                             border={"1px"}
                             borderColor={"gray.100"}
                             onClick={() =>
-                              sendToHistocalData(word.id, word.word)
+                              sendToHistocalData(word.id, word.word, "")
                             }
                           >
                             <ModalWordDetails
                               word={word.word}
                               wordId={word.id}
+                              favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
+                              removeFavoritesWord={removeFavoritesWord}
                             />
                           </Center>
                         </WrapItem>
@@ -442,7 +495,9 @@ export const WordTable = () => {
                             <ModalWordDetails
                               word={word.word}
                               wordId={word.id}
+                              favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
+                              removeFavoritesWord={removeFavoritesWord}
                             />
                           </Center>
                         </WrapItem>
@@ -462,13 +517,15 @@ export const WordTable = () => {
                             border={"1px"}
                             borderColor={"gray.100"}
                             onClick={() =>
-                              sendToHistocalData(word.id, word.word)
+                              sendToHistocalData(word.id, word.word, "")
                             }
                           >
                             <ModalWordDetails
                               word={word.word}
                               wordId={word.id}
+                              favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
+                              removeFavoritesWord={removeFavoritesWord}
                             />
                           </Center>
                         </WrapItem>
