@@ -11,18 +11,9 @@ export const DashBoard = () => {
     <>
       <Header />
       <Center mt={100}>
-        {isLargerThan1302 ? (
-          <>
-            <HStack spacing={10}>
-              <WordDetails />
-              <WordTable />
-            </HStack>
-          </>
-        ) : (
-          <>
-            <WordTable />
-          </>
-        )}
+        <>
+          <WordTable />
+        </>
       </Center>
     </>
   );

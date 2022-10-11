@@ -9,9 +9,24 @@ import {
   SliderTrack,
   Button,
 } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { FiPlay } from "react-icons/fi";
+import { api, dictionaryapi } from "../../services";
 
-export const WordDetails = () => {
+interface WordTableProps {
+  word: string;
+  wordId: string;
+  sendToFavoriteData: (word_id: string, word: string) => void;
+}
+
+export const WordDetails = ({
+  word,
+  wordId,
+  sendToFavoriteData,
+}: WordTableProps) => {
+  const token = localStorage.getItem("@AcessToken");
+  const user_id = localStorage.getItem("@AcessUserID");
+
   return (
     <VStack spacing={5} textAlign={"left"} alignItems={"flex-start"}>
       <Center
@@ -65,6 +80,11 @@ export const WordDetails = () => {
           w={"125px"}
         />
       </HStack>
+
+      <Text>{word?.toLocaleUpperCase()}</Text>
+      <Text as="button" onClick={() => sendToFavoriteData(wordId, word)}>
+        Favoritar +{" "}
+      </Text>
     </VStack>
   );
 };

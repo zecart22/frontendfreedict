@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState, useCallback } from "react";
 import { InfiniteScroll } from "../InfiniteScroll";
 import { ModalWordDetails } from "../modalWordDetails";
+import { WordDetails } from "../WordDetails";
 
 import { api } from "../../services";
 
@@ -35,29 +36,19 @@ export const WordTable = () => {
   const [showAllFavoriteWords, setShowAllFavoriteWords] = useState(false);
   const [showAllHistoricalWords, setShowAllHistoricalWords] = useState(false);
   const [wordId, setWordId] = useState("");
+  const [word, setWord] = useState("");
   const token = localStorage.getItem("@AcessToken");
   const user_id = localStorage.getItem("@AcessUserID");
 
   const skip = 50;
   const limit = take;
 
+  /* All words */
+
   const handleAllWords = () => {
     setShowAllWords(true);
     setShowAllFavoriteWords(false);
     setShowAllHistoricalWords(false);
-  };
-
-  const handleAllFavoriteWords = () => {
-    setShowAllFavoriteWords(true);
-    setShowAllWords(false);
-    setShowAllHistoricalWords(false);
-  };
-
-  const handleAllHistoricalWords = () => {
-    setShowAllHistoricalWords(true);
-    setShowAllFavoriteWords(false);
-    setShowAllWords(false);
-    loadHistoricalWords();
   };
 
   const loadWords = useCallback(async (limit: number) => {
@@ -74,6 +65,12 @@ export const WordTable = () => {
     }
   }, []);
 
+  useEffect(() => {
+    loadWords(limit);
+  }, [loadWords, take]);
+
+  /* Favorites Words */
+
   const loadFavoritesWords = useCallback(async () => {
     try {
       const response = await api.get(
@@ -87,6 +84,35 @@ export const WordTable = () => {
       console.log(err);
     }
   }, []);
+
+  const sendToFavoritesWords = useCallback(async (wId: string) => {
+    try {
+      const response = await api.post(
+        `/send/word/favorite?word_id=${wId}&user_id=${user_id}`
+      );
+      console.log(response);
+      loadFavoritesWords();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const sendToFavoriteData = (word_id: string, word: string) => {
+    sendToFavoritesWords(word_id);
+  };
+
+  const handleAllFavoriteWords = () => {
+    setShowAllFavoriteWords(true);
+    setShowAllWords(false);
+    setShowAllHistoricalWords(false);
+    loadFavoritesWords();
+  };
+
+  useEffect(() => {
+    loadFavoritesWords();
+  }, []);
+
+  /* Historical Words */
 
   const loadHistoricalWords = useCallback(async () => {
     try {
@@ -125,32 +151,37 @@ export const WordTable = () => {
     }
   }, []);
 
-  const sendToHistocalData = (word_id: string) => {
-    setWordId((previousWord: string) => (previousWord = word_id));
+  const sendToHistocalData = (word_id: string, word_word: string) => {
     sendToHistoricalWords(word_id);
+    loadHistoricalWords();
+    setWordId(word_id);
+    setWord(word_word);
+  };
+
+  const handleAllHistoricalWords = () => {
+    setShowAllHistoricalWords(true);
+    setShowAllFavoriteWords(false);
+    setShowAllWords(false);
     loadHistoricalWords();
   };
 
-  const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
-
-  useEffect(() => {
-    loadWords(limit);
-  }, [loadWords, take]);
-
-  useEffect(() => {
-    loadFavoritesWords();
-  }, []);
-
   useEffect(() => {
     loadHistoricalWords();
   }, []);
+
+  const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
 
   console.log(wordId);
 
   return (
     <>
       {isLargerThan1302 ? (
-        <>
+        <HStack spacing={10}>
+          <WordDetails
+            wordId={wordId}
+            word={word}
+            sendToFavoriteData={sendToFavoriteData}
+          />
           <VStack spacing={0} alignItems={"normal"}>
             <HStack>
               <Box w={"25px"} />
@@ -207,20 +238,25 @@ export const WordTable = () => {
                     {dataWords &&
                       dataWords.map((word) => (
                         <WrapItem>
-                          <Center
-                            as="button"
-                            h="40px"
-                            w={["100px", "150px"]}
-                            bg="theme.white"
-                            color={"theme.black"}
-                            border={"1px"}
-                            borderColor={"gray.100"}
-                            fontSize={"14px"}
-                            padding={"8px"}
-                            onClick={() => sendToHistocalData(word.id)}
-                          >
-                            {word.word}
-                          </Center>
+                          <VStack>
+                            <Center
+                              flexDirection={"column"}
+                              as="button"
+                              h="40px"
+                              w={["100px", "150px"]}
+                              bg="theme.white"
+                              color={"theme.black"}
+                              border={"1px"}
+                              borderColor={"gray.100"}
+                              fontSize={"14px"}
+                              padding={"8px"}
+                              onClick={() =>
+                                sendToHistocalData(word.id, word.word)
+                              }
+                            >
+                              {word.word}
+                            </Center>
+                          </VStack>
                         </WrapItem>
                       ))}
                     <InfiniteScroll
@@ -255,6 +291,7 @@ export const WordTable = () => {
                       dataFavoriteWords.map((word) => (
                         <WrapItem>
                           <Center
+                            as="button"
                             h="40px"
                             w={["100px", "150px"]}
                             bg="theme.white"
@@ -263,6 +300,9 @@ export const WordTable = () => {
                             borderColor={"gray.100"}
                             fontSize={"14px"}
                             padding={"8px"}
+                            onClick={() =>
+                              sendToHistocalData(word.id, word.word)
+                            }
                           >
                             {word.word}
                           </Center>
@@ -304,7 +344,7 @@ export const WordTable = () => {
               <></>
             )}
           </VStack>
-        </>
+        </HStack>
       ) : (
         <>
           <VStack spacing={5} alignItems={"flex-start"} textAlign={"left"}>
@@ -368,9 +408,15 @@ export const WordTable = () => {
                             color={"theme.black"}
                             border={"1px"}
                             borderColor={"gray.100"}
-                            onClick={() => sendToHistocalData(word.id)}
+                            onClick={() =>
+                              sendToHistocalData(word.id, word.word)
+                            }
                           >
-                            <ModalWordDetails word={word.word} />
+                            <ModalWordDetails
+                              word={word.word}
+                              wordId={word.id}
+                              sendToFavoriteData={sendToFavoriteData}
+                            />
                           </Center>
                         </WrapItem>
                       ))}
@@ -393,7 +439,11 @@ export const WordTable = () => {
                             border={"1px"}
                             borderColor={"gray.100"}
                           >
-                            <ModalWordDetails word={word.word} />
+                            <ModalWordDetails
+                              word={word.word}
+                              wordId={word.id}
+                              sendToFavoriteData={sendToFavoriteData}
+                            />
                           </Center>
                         </WrapItem>
                       ))}
@@ -404,14 +454,22 @@ export const WordTable = () => {
                       dataFavoriteWords.map((word) => (
                         <WrapItem>
                           <Center
+                            as="button"
                             h="40px"
                             w={["200px", "120px"]}
                             bg="theme.white"
                             color={"theme.black"}
                             border={"1px"}
                             borderColor={"gray.100"}
+                            onClick={() =>
+                              sendToHistocalData(word.id, word.word)
+                            }
                           >
-                            <ModalWordDetails word={word.word} />
+                            <ModalWordDetails
+                              word={word.word}
+                              wordId={word.id}
+                              sendToFavoriteData={sendToFavoriteData}
+                            />
                           </Center>
                         </WrapItem>
                       ))}
