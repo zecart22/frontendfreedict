@@ -117,6 +117,18 @@ export const WordTable = () => {
     }
   }, []);
 
+  const clearFavoritesWords = useCallback(async () => {
+    try {
+      const response = await api.delete(`/clear/favorite`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      loadFavoritesWords();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   const sendToFavoriteData = (word_id: string, word: string) => {
     sendToFavoritesWords(word_id);
   };
@@ -389,6 +401,7 @@ export const WordTable = () => {
                   bg={"theme.white"}
                   color={"gray"}
                   w={"125px"}
+                  onClick={clearFavoritesWords}
                 />
               </>
             ) : (
@@ -560,6 +573,18 @@ export const WordTable = () => {
                   color={"gray"}
                   w={"125px"}
                   onClick={clearHistoricalWords}
+                />
+              </>
+            ) : showAllFavoriteWords ? (
+              <>
+                <Button
+                  children={"Limpar Favoritos"}
+                  fontSize={"12px"}
+                  borderRadius={"0px"}
+                  bg={"theme.white"}
+                  color={"gray"}
+                  w={"125px"}
+                  onClick={clearFavoritesWords}
                 />
               </>
             ) : (
