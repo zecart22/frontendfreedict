@@ -6,7 +6,7 @@ import { WordTable } from "../../components/WordsTable";
 export const DashBoard = () => {
   const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
   const token = localStorage.getItem("@AcessToken");
-  console.log(token);
+
   return (
     <>
       <Header />

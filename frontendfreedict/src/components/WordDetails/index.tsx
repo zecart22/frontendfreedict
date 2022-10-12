@@ -11,12 +11,17 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { FiPlay } from "react-icons/fi";
-import { api, dictionaryapi } from "../../services";
+import { api } from "../../services";
 
 interface WordTableProps {
   word: string;
   wordId: string;
   favoriteWordId: string;
+  showAllFavoriteWords: boolean;
+  nextWord: () => void;
+  previousWord: () => void;
+  nextFavoriteWord: () => void;
+  previousFavoriteWord: () => void;
   sendToFavoriteData: (word_id: string, word: string) => void;
   removeFavoritesWord: (word_id: string) => void;
 }
@@ -25,13 +30,19 @@ export const WordDetails = ({
   word,
   wordId,
   favoriteWordId,
+  showAllFavoriteWords,
+  nextFavoriteWord,
+  nextWord,
+  previousFavoriteWord,
+  previousWord,
   sendToFavoriteData,
   removeFavoritesWord,
 }: WordTableProps) => {
   const token = localStorage.getItem("@AcessToken");
   const user_id = localStorage.getItem("@AcessUserID");
-  console.log(`${word} : ${wordId}`);
-  console.log(`favoriteWordId : ${favoriteWordId}`);
+
+  
+
   return (
     <VStack spacing={5} textAlign={"left"} alignItems={"flex-start"}>
       <Center
@@ -42,7 +53,7 @@ export const WordDetails = ({
         borderColor={"theme.black"}
       >
         <VStack>
-          <Text>{"Hello"}</Text>
+          <Text>{word}</Text>
           <Text>{"həˈloʊ"}</Text>
         </VStack>
       </Center>
@@ -66,24 +77,53 @@ export const WordDetails = ({
       </Text>
       <Text fontSize={15}>Verb - "Hello!" or an equivalent greeting.</Text>
       <HStack>
-        <Button
-          children={"Voltar"}
-          bg={"theme.white"}
-          border={"1px"}
-          borderRadius={"0px"}
-          borderColor={"theme.black"}
-          color={"theme.black"}
-          w={"125px"}
-        />
-        <Button
-          children={"Próximo"}
-          borderRadius={"0px"}
-          bg={"theme.white"}
-          border={"1px"}
-          borderColor={"theme.black"}
-          color={"theme.black"}
-          w={"125px"}
-        />
+        {showAllFavoriteWords ? (
+          <>
+            <Button
+              children={"Voltar"}
+              bg={"theme.white"}
+              border={"1px"}
+              borderRadius={"0px"}
+              borderColor={"theme.black"}
+              color={"theme.black"}
+              w={"125px"}
+              onClick={previousFavoriteWord}
+            />
+            <Button
+              children={"Próximo"}
+              borderRadius={"0px"}
+              bg={"theme.white"}
+              border={"1px"}
+              borderColor={"theme.black"}
+              color={"theme.black"}
+              w={"125px"}
+              onClick={nextFavoriteWord}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              children={"Voltar"}
+              bg={"theme.white"}
+              border={"1px"}
+              borderRadius={"0px"}
+              borderColor={"theme.black"}
+              color={"theme.black"}
+              w={"125px"}
+              onClick={previousWord}
+            />
+            <Button
+              children={"Próximo"}
+              borderRadius={"0px"}
+              bg={"theme.white"}
+              border={"1px"}
+              borderColor={"theme.black"}
+              color={"theme.black"}
+              w={"125px"}
+              onClick={nextWord}
+            />
+          </>
+        )}
       </HStack>
 
       <Text>{word?.toLocaleUpperCase()}</Text>

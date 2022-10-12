@@ -16,7 +16,7 @@ import { InfiniteScroll } from "../InfiniteScroll";
 import { ModalWordDetails } from "../modalWordDetails";
 import { WordDetails } from "../WordDetails";
 
-import { api } from "../../services";
+import { api, dictionaryapi } from "../../services";
 
 interface WordsResponse {
   wordsData: any;
@@ -82,7 +82,7 @@ export const WordTable = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response.data);
+
       setDataFavoriteWords(response.data);
     } catch (err) {
       console.log(err);
@@ -165,7 +165,6 @@ export const WordTable = () => {
       const response = await api.post(
         `/send/word/historical?word_id=${wId}&user_id=${user_id}`
       );
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -176,7 +175,7 @@ export const WordTable = () => {
       const response = await api.delete(`/clear/historical`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response);
+
       loadHistoricalWords();
     } catch (err) {
       console.log(err);
@@ -193,6 +192,7 @@ export const WordTable = () => {
     setWordId(word_id);
     setWord(word_word);
     setFavoriteWordId(id);
+    loadWordsInformation(word_word);
   };
 
   const handleAllHistoricalWords = () => {
@@ -208,7 +208,59 @@ export const WordTable = () => {
 
   const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
 
-  console.log(wordId);
+  /*  previous and next functions */
+
+  const arrayWords = dataWords.map((word) => word.word);
+  const arrayWordId = dataWords.map((word) => word.id);
+  const arrayFavoriteWords = dataFavoriteWords.map(
+    (word) => word.wordsData.word
+  );
+  const arrayFavoriteWordsId = dataFavoriteWords.map(
+    (word) => word.favoriteWordId
+  );
+
+  const index = (element: any) => element === word;
+
+  const findPosition = arrayWords.findIndex(index);
+  const findPositionFavoriteWords = arrayFavoriteWords.findIndex(index);
+
+  const nextWord = () => {
+    const next = arrayWords[findPosition + 1];
+    const nextId = arrayWordId[findPosition + 1];
+    setWord(next);
+    setWordId(nextId);
+  };
+
+  const previousWord = () => {
+    const previus = arrayWords[findPosition - 1];
+    const previusId = arrayWordId[findPosition - 1];
+    setWord(previus);
+    setWordId(previusId);
+  };
+
+  const nextFavoriteWord = () => {
+    const next = arrayFavoriteWords[findPositionFavoriteWords + 1];
+    const nextId = arrayFavoriteWordsId[findPositionFavoriteWords + 1];
+    setWord(next);
+    setFavoriteWordId(nextId);
+  };
+
+  const previousFavoriteWord = () => {
+    const previus = arrayFavoriteWords[findPositionFavoriteWords - 1];
+    const previusId = arrayFavoriteWordsId[findPositionFavoriteWords - 1];
+    setWord(previus);
+    setFavoriteWordId(previusId);
+  };
+
+  /* word request */
+  const loadWordsInformation = useCallback(async (word: string) => {
+    try {
+      const response = await dictionaryapi.get(`/${word}`);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <>
@@ -220,6 +272,11 @@ export const WordTable = () => {
             favoriteWordId={favoriteWordId}
             sendToFavoriteData={sendToFavoriteData}
             removeFavoritesWord={removeFavoritesWord}
+            nextWord={nextWord}
+            previousWord={previousWord}
+            nextFavoriteWord={nextFavoriteWord}
+            previousFavoriteWord={previousFavoriteWord}
+            showAllFavoriteWords={showAllFavoriteWords}
           />
           <VStack spacing={0} alignItems={"normal"}>
             <HStack>
@@ -482,6 +539,11 @@ export const WordTable = () => {
                               favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
                               removeFavoritesWord={removeFavoritesWord}
+                              nextWord={nextWord}
+                              previousWord={previousWord}
+                              nextFavoriteWord={nextFavoriteWord}
+                              previousFavoriteWord={previousFavoriteWord}
+                              showAllFavoriteWords={showAllFavoriteWords}
                             />
                           </Center>
                         </WrapItem>
@@ -511,6 +573,11 @@ export const WordTable = () => {
                               favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
                               removeFavoritesWord={removeFavoritesWord}
+                              nextWord={nextWord}
+                              previousWord={previousWord}
+                              nextFavoriteWord={nextFavoriteWord}
+                              previousFavoriteWord={previousFavoriteWord}
+                              showAllFavoriteWords={showAllFavoriteWords}
                             />
                           </Center>
                         </WrapItem>
@@ -539,6 +606,11 @@ export const WordTable = () => {
                               favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
                               removeFavoritesWord={removeFavoritesWord}
+                              nextWord={nextWord}
+                              previousWord={previousWord}
+                              nextFavoriteWord={nextFavoriteWord}
+                              previousFavoriteWord={previousFavoriteWord}
+                              showAllFavoriteWords={showAllFavoriteWords}
                             />
                           </Center>
                         </WrapItem>
