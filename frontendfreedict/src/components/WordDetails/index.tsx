@@ -9,9 +9,9 @@ import {
   SliderTrack,
   Button,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+
 import { FiPlay } from "react-icons/fi";
-import { api } from "../../services";
+import { AudioPlayer } from "../AudioPlayer";
 
 interface WordTableProps {
   word: string;
@@ -24,6 +24,7 @@ interface WordTableProps {
   previousFavoriteWord: () => void;
   sendToFavoriteData: (word_id: string, word: string) => void;
   removeFavoritesWord: (word_id: string) => void;
+  wordDictApi: any;
 }
 
 export const WordDetails = ({
@@ -37,14 +38,59 @@ export const WordDetails = ({
   previousWord,
   sendToFavoriteData,
   removeFavoritesWord,
+  wordDictApi,
 }: WordTableProps) => {
-  const token = localStorage.getItem("@AcessToken");
-  const user_id = localStorage.getItem("@AcessUserID");
+  if (wordDictApi.length === 0) {
+    window.localStorage.setItem("@Phonetic", "");
 
-  
+    window.localStorage.setItem("@Type", "");
+
+    window.localStorage.setItem("@Definition", "");
+
+    window.localStorage.setItem("@Audio", "");
+  } else {
+    const phonect = wordDictApi.phonetic;
+
+    window.localStorage.setItem("@Phonetic", phonect);
+
+    const type = wordDictApi.meanings[0].partOfSpeech;
+
+    window.localStorage.setItem("@Type", type);
+
+    const definition = wordDictApi.meanings[0].definitions[0].definition;
+
+    window.localStorage.setItem("@Definition", definition);
+
+    if (wordDictApi.phonetics.length === 0) {
+      window.localStorage.setItem("@Audio", "");
+    } else {
+      const audio = wordDictApi.phonetics[0].audio;
+
+      window.localStorage.setItem("@Audio", audio);
+    }
+  }
+
+  const phonect = localStorage.getItem("@Phonetic");
+  const type = localStorage.getItem("@Type");
+  const definition = localStorage.getItem("@Definition");
+  const audio = localStorage.getItem("@Audio");
+
+  console.log(phonect);
+  console.log(type);
+  console.log(definition);
+  console.log(`audio: ${audio}`);
 
   return (
     <VStack spacing={5} textAlign={"left"} alignItems={"flex-start"}>
+      {wordDictApi.length === 0 ? (
+        <>
+          <Text w={["230px", "280px"]} color={"theme.red"} fontSize={"12px"}>
+            Não foi possivel carregar as informações da palavra escolhida.
+          </Text>
+        </>
+      ) : (
+        <></>
+      )}
       <Center
         h="150px"
         w={["230px", "280px"]}
@@ -54,11 +100,18 @@ export const WordDetails = ({
       >
         <VStack>
           <Text>{word}</Text>
-          <Text>{"həˈloʊ"}</Text>
+          {phonect === "undefined" ? (
+            <></>
+          ) : (
+            <>
+              <Text>{phonect}</Text>
+            </>
+          )}
         </VStack>
       </Center>
       <HStack>
-        <FiPlay size={40} />
+        {/*  <FiPlay size={40} />
+        {audio}
         <Slider
           aria-label="slider-ex-6"
           w={"230px"}
@@ -71,11 +124,15 @@ export const WordDetails = ({
             <SliderFilledTrack h={"10px"} bg={"#99DDFF"} />
           </SliderTrack>
         </Slider>
+        */}
+        <AudioPlayer />
       </HStack>
       <Text fontSize={30} fontWeight={"bold"}>
         Meanings
       </Text>
-      <Text fontSize={15}>Verb - "Hello!" or an equivalent greeting.</Text>
+      <Text fontSize={15} w={["230px", "280px"]}>
+        {type} - {definition}
+      </Text>
       <HStack>
         {showAllFavoriteWords ? (
           <>

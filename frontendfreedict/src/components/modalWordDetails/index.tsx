@@ -22,6 +22,7 @@ interface WordProps {
   previousFavoriteWord: () => void;
   sendToFavoriteData: (word_id: string, word: string) => void;
   removeFavoritesWord: (word_id: string) => void;
+  wordDictApi: any;
 }
 
 export const ModalWordDetails = ({
@@ -35,6 +36,7 @@ export const ModalWordDetails = ({
   previousWord,
   sendToFavoriteData,
   removeFavoritesWord,
+  wordDictApi,
 }: WordProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -67,6 +69,7 @@ export const ModalWordDetails = ({
               nextFavoriteWord={nextFavoriteWord}
               previousFavoriteWord={previousFavoriteWord}
               showAllFavoriteWords={showAllFavoriteWords}
+              wordDictApi={wordDictApi}
             ></WordDetails>
           </ModalBody>
 
