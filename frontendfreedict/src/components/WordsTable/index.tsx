@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   CircularProgress,
   Input,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useCallback } from "react";
 import { InfiniteScroll } from "../InfiniteScroll";
@@ -224,13 +225,15 @@ export const WordTable = () => {
 
   const findPosition = arrayWords.findIndex(index);
   const findPositionFavoriteWords = arrayFavoriteWords.findIndex(index);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const nextWord = () => {
     const nextWord = arrayWords[findPosition + 1];
     const nextWordId = arrayWordId[findPosition + 1];
     setWord(nextWord);
     setWordId(nextWordId);
     loadWordsInformation(nextWord);
+    onClose();
+    onOpen();
   };
 
   const previousWord = () => {
@@ -239,6 +242,8 @@ export const WordTable = () => {
     setWord(previusWord);
     setWordId(previusWordId);
     loadWordsInformation(previusWord);
+    onClose();
+    onOpen();
   };
 
   const nextFavoriteWord = () => {
@@ -247,6 +252,7 @@ export const WordTable = () => {
     setWord(nextWord);
     setFavoriteWordId(nextWordId);
     loadWordsInformation(nextWord);
+    onOpen();
   };
 
   const previousFavoriteWord = () => {
@@ -255,6 +261,7 @@ export const WordTable = () => {
     setWord(previusWord);
     setFavoriteWordId(previusWordId);
     loadWordsInformation(previusWord);
+    onOpen();
   };
 
   /* word request */
@@ -270,8 +277,6 @@ export const WordTable = () => {
       setWordDictApi([]);
     }
   }, []);
-
-  console.log(wordDictApi);
 
   return (
     <>
@@ -605,18 +610,26 @@ export const WordTable = () => {
                           <Center
                             as="button"
                             h="40px"
-                            w={["200px", "120px"]}
+                            w={["200px", "150px"]}
                             bg="theme.white"
                             color={"theme.black"}
                             border={"1px"}
                             borderColor={"gray.100"}
+                            padding={"8px"}
+                            _hover={{
+                              borderColor: "black",
+                            }}
                             onClick={() =>
-                              sendToHistocalData(word.id, word.word, "")
+                              sendToHistocalData(
+                                word.wordsData.id,
+                                word.wordsData.word,
+                                word.favoriteWordId
+                              )
                             }
                           >
                             <ModalWordDetails
-                              word={word.word}
-                              wordId={word.id}
+                              word={word.wordsData.word}
+                              wordId={word.wordsData.id}
                               favoriteWordId={favoriteWordId}
                               sendToFavoriteData={sendToFavoriteData}
                               removeFavoritesWord={removeFavoritesWord}

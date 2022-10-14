@@ -104,27 +104,12 @@ export const WordDetails = ({
             <></>
           ) : (
             <>
-              <Text>{phonect}</Text>
+              <Text>{phonect?.replace("/", "").replace("/", "")}</Text>
             </>
           )}
         </VStack>
       </Center>
       <HStack>
-        {/*  <FiPlay size={40} />
-        {audio}
-        <Slider
-          aria-label="slider-ex-6"
-          w={"230px"}
-          defaultValue={0}
-          min={0}
-          max={300}
-          step={30}
-        >
-          <SliderTrack h={"10px"}>
-            <SliderFilledTrack h={"10px"} bg={"#99DDFF"} />
-          </SliderTrack>
-        </Slider>
-        */}
         <AudioPlayer />
       </HStack>
       <Text fontSize={30} fontWeight={"bold"}>
