@@ -72,7 +72,7 @@ export const ModalWordDetails = ({
               previousFavoriteWord={previousFavoriteWord}
               showAllFavoriteWords={showAllFavoriteWords}
               wordDictApi={wordDictApi}
-            ></WordDetails>
+            />
           </ModalBody>
 
           <ModalFooter>

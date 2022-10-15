@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
-import { api } from "../../../services";
 
 interface SignUpDataProps {
   name: string;

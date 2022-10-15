@@ -12,7 +12,6 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ModalFail } from "../../modalFailLogin";
 

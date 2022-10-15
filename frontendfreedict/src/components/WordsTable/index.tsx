@@ -9,14 +9,17 @@ import {
   Box,
   useMediaQuery,
   CircularProgress,
-  Input,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useCallback } from "react";
 import { InfiniteScroll } from "../InfiniteScroll";
 import { ModalWordDetails } from "../modalWordDetails";
 import { WordDetails } from "../WordDetails";
-
+import {
+  CardWords,
+  CardHistoricalWords,
+  CardFavoriteWords,
+} from "../WordsTable/cardWord";
 import { api, dictionaryapi } from "../../services";
 
 interface WordsResponse {
@@ -282,7 +285,7 @@ export const WordTable = () => {
   return (
     <>
       {isLargerThan1302 ? (
-        <HStack spacing={10}>
+        <HStack spacing={10} className="WordsTable">
           <WordDetails
             wordId={wordId}
             word={word}
@@ -353,26 +356,11 @@ export const WordTable = () => {
                       dataWords.map((word) => (
                         <WrapItem>
                           <VStack>
-                            <Center
-                              flexDirection={"column"}
-                              as="button"
-                              h="40px"
-                              w={["100px", "150px"]}
-                              bg="theme.white"
-                              color={"theme.black"}
-                              border={"1px"}
-                              borderColor={"gray.100"}
-                              fontSize={"14px"}
-                              padding={"8px"}
-                              _hover={{
-                                borderColor: "black",
-                              }}
-                              onClick={() =>
-                                sendToHistocalData(word.id, word.word, "")
-                              }
-                            >
-                              {word.word}
-                            </Center>
+                            <CardWords
+                              word={word.word}
+                              wordId={word.id}
+                              sendToHistocalData={sendToHistocalData}
+                            />
                           </VStack>
                         </WrapItem>
                       ))}
@@ -387,21 +375,7 @@ export const WordTable = () => {
                     {dataHistoricalWords &&
                       dataHistoricalWords.map((word) => (
                         <WrapItem>
-                          <Center
-                            h="40px"
-                            w={["100px", "150px"]}
-                            bg="theme.white"
-                            color={"theme.black"}
-                            border={"1px"}
-                            borderColor={"gray.100"}
-                            fontSize={"14px"}
-                            padding={"8px"}
-                            _hover={{
-                              borderColor: "black",
-                            }}
-                          >
-                            {word.word}
-                          </Center>
+                          <CardHistoricalWords word={word.word} />
                         </WrapItem>
                       ))}
                   </>
@@ -410,29 +384,13 @@ export const WordTable = () => {
                     {dataFavoriteWords &&
                       dataFavoriteWords.map((word) => (
                         <WrapItem>
-                          <Center
-                            as="button"
-                            h="40px"
-                            w={["100px", "150px"]}
-                            bg="theme.white"
-                            color={"theme.black"}
-                            border={"1px"}
-                            borderColor={"gray.100"}
-                            fontSize={"14px"}
-                            padding={"8px"}
-                            _hover={{
-                              borderColor: "black",
-                            }}
-                            onClick={() =>
-                              sendToHistocalData(
-                                word.wordsData.id,
-                                word.wordsData.word,
-                                word.favoriteWordId
-                              )
-                            }
-                          >
-                            {word.wordsData.word}
-                          </Center>
+                          <CardFavoriteWords
+                            key={"word"}
+                            favoriteWordId={word.favoriteWordId}
+                            word={word.wordsData.word}
+                            wordId={word.wordsData.id}
+                            sendToHistocalData={sendToHistocalData}
+                          />
                         </WrapItem>
                       ))}
                   </>
@@ -540,6 +498,7 @@ export const WordTable = () => {
                       dataWords.map((word) => (
                         <WrapItem>
                           <Center
+                            className="wordCard"
                             as={"button"}
                             h="40px"
                             w={["200px", "120px"]}
@@ -579,6 +538,7 @@ export const WordTable = () => {
                       dataHistoricalWords.map((word) => (
                         <WrapItem>
                           <Center
+                            className="historicalWordCard"
                             h="40px"
                             w={["200px", "120px"]}
                             bg="theme.white"
@@ -609,6 +569,7 @@ export const WordTable = () => {
                       dataFavoriteWords.map((word) => (
                         <WrapItem>
                           <Center
+                            className="favoriteWordCard"
                             as="button"
                             h="40px"
                             w={["200px", "150px"]}

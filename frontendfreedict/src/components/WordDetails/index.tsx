@@ -1,16 +1,5 @@
-import {
-  Center,
-  VStack,
-  Text,
-  HStack,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
-  Button,
-} from "@chakra-ui/react";
+import { Center, VStack, Text, HStack, Button } from "@chakra-ui/react";
 
-import { FiPlay } from "react-icons/fi";
 import { AudioPlayer } from "../AudioPlayer";
 
 interface WordTableProps {
@@ -73,7 +62,6 @@ export const WordDetails = ({
   const phonect = localStorage.getItem("@Phonetic");
   const type = localStorage.getItem("@Type");
   const definition = localStorage.getItem("@Definition");
-  const audio = localStorage.getItem("@Audio");
   const Word = localStorage.getItem("@Word");
 
   return (
@@ -81,7 +69,7 @@ export const WordDetails = ({
       {wordDictApi.length === 0 ? (
         <>
           <Text w={["230px", "280px"]} color={"theme.red"} fontSize={"12px"}>
-            Não foi possivel carregar as informações da palavra escolhida.
+            Não foi possivel carregar todas informações da palavra escolhida.
           </Text>
         </>
       ) : (

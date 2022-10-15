@@ -1,5 +1,4 @@
 import {
-  Center,
   Flex,
   Image,
   keyframes,
