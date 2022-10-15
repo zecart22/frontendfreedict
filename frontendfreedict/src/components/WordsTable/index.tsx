@@ -47,6 +47,7 @@ export const WordTable = () => {
 
   const skip = 50;
   const limit = take;
+  window.localStorage.setItem("@Word", word);
 
   /* All words */
 

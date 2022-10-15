@@ -74,11 +74,7 @@ export const WordDetails = ({
   const type = localStorage.getItem("@Type");
   const definition = localStorage.getItem("@Definition");
   const audio = localStorage.getItem("@Audio");
-
-  console.log(phonect);
-  console.log(type);
-  console.log(definition);
-  console.log(`audio: ${audio}`);
+  const Word = localStorage.getItem("@Word");
 
   return (
     <VStack spacing={5} textAlign={"left"} alignItems={"flex-start"}>
@@ -99,7 +95,7 @@ export const WordDetails = ({
         borderColor={"theme.black"}
       >
         <VStack>
-          <Text>{word}</Text>
+          <Text>{Word}</Text>
           {phonect === "undefined" ? (
             <></>
           ) : (
@@ -168,7 +164,7 @@ export const WordDetails = ({
         )}
       </HStack>
 
-      <Text>{word?.toLocaleUpperCase()}</Text>
+      <Text>{Word?.toLocaleUpperCase()}</Text>
       <HStack spacing={10}>
         <Text as="button" onClick={() => sendToFavoriteData(wordId, word)}>
           Favoritar +{" "}

@@ -16,6 +16,7 @@ interface WordProps {
   wordId: string;
   favoriteWordId: string;
   showAllFavoriteWords: boolean;
+
   nextWord: () => void;
   previousWord: () => void;
   nextFavoriteWord: () => void;
@@ -30,6 +31,7 @@ export const ModalWordDetails = ({
   wordId,
   favoriteWordId,
   showAllFavoriteWords,
+
   nextFavoriteWord,
   nextWord,
   previousFavoriteWord,
