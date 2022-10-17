@@ -133,14 +133,15 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
   <li>Chakra UI é uma poderosa Lib que utilizo muito para estilização das minhas aplicações, ela me ajuda a ganhar tempo e qualidade no trabalho em relação ao Syled Components ou CSS puro</li>
   <li>Context API para centralizar e gerenciar todas informações que eu preciso</li>
   <li>Axios para requisições</li>
-  <p>Yup para montagem do schema e controle dos forms e envio do "data" em conformidade com o que se pede na documentação da API </p>
-<p>Poderoso framework para teste do tipo End-to-End </p>
+  <li>Yup para montagem do schema e controle dos forms e envio do "data" em conformidade com o que se pede na documentação da API </li>
+<li>Cypress é um poderoso framework para teste do tipo End-to-End </li>
 </ul>
 
 <h4> Estrutura dos diretórios</h4>
--     cypress
-      +---------e2e: aqui estão os arquivos com os teste que serão rodados.    
--     src
+
+      cypress
+            +---------e2e: aqui estão os arquivos com os teste que serão rodados.
+     src
       +---------assests
                 +-------images : nesse diretório estão todas as imagens uitlizadas na aplicação.
 
