@@ -2,6 +2,8 @@
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/Kz8DQh7/DICTOOL-LOGO.png" alt="DICTOOL-LOGO" border="0"></a>
 
+<a href="https://www.loom.com/embed/f55d84f07a8947dd80ef18d01e026c7c" title="deploy">Apresentação em vídeo da aplicação</a></br>
+
 <h2> Objetivo:</h2>
 
 <p>O projeto tem como objetivo principal possibilitar que o usuário consiga acessar um acervo de palavras em inglês e para cada palavra disponível verificar seu tipo, pronuncia, aplicação e etc.</p>
