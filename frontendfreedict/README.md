@@ -6,7 +6,7 @@
 
 <p>Para poder acessar o dashboard e ultilizar as funcionalidades deverá ser feito um cadastro e posteriormente o longin </p>
 
-<img src="https://lab.coodesh.com/zecart22/dictionary/-/raw/main/img/wireframe.png" alt="imagem" border="0"></a>
+<a href="https://ibb.co/Fntyhsh"><img src="https://i.ibb.co/mS72RvR/wireframe-Free-Dict.png" alt="wireframe-Free-Dict" border="0"></a>
 
 <p>Dentre as funcionalidades temos: </p>
 
@@ -90,6 +90,10 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
 <h4> Clone do repositório </h4>
 
 - `https://github.com/zecart22/frontendfreedict`
+
+<h4> Backend com a API da aplicação <h4>
+
+- `https://github.com/zecart22/backendfreedict`
 
 <h4> Instalando dependencias</h4>
 
