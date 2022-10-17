@@ -6,7 +6,7 @@
 
 <p>Para poder acessar o dashboard e ultilizar as funcionalidades deverá ser feito um cadastro e posteriormente o longin </p>
 
-<a href="https://ibb.co/PF5c7zG"><img src="https://i.ibb.co/YPtczTB/MyDaily.png" alt="MyDaily" border="0"></a>
+<img src="https://lab.coodesh.com/zecart22/dictionary/-/raw/main/img/wireframe.png" alt="imagem" border="0"></a>
 
 <p>Dentre as funcionalidades temos: </p>
 
@@ -85,11 +85,11 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
 
 </p>
 
-<a href="https://my-daily-events-git-main-zecart22.vercel.app/" title="deploy">Deploy da aplicação</a></br>
+<a href="" title="deploy">Deploy da aplicação</a></br>
 
 <h4> Clone do repositório </h4>
 
-- `https://github.com/zecart22/backendfreedict`
+- `https://github.com/zecart22/frontendfreedict`
 
 <h4> Instalando dependencias</h4>
 
@@ -98,6 +98,11 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
 <h4> Rodando projeto</h4>
 
 - `yarn start`
+
+<h4> Rodando os testes</h4>
+
+- `yarn run cypress open`
+- `https://docs.cypress.io/guides/overview/why-cypress`
 
 <h4> Tecnologias utilizadas</h4>
 
@@ -110,6 +115,7 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
 - `React Router Dom`
 - `AXIOS`
 - `Yup`
+- `Cypress`
 
 <h4> Por que da Stack ?</h4>
 
@@ -122,18 +128,19 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
   <li>Context API para centralizar e gerenciar todas informações que eu preciso</li>
   <li>Axios para requisições</li>
   <p>Yup para montagem do schema e controle dos forms e envio do "data" em conformidade com o que se pede na documentação da API </p>
-
+<p>Poderoso framework para teste do tipo End-to-End </p>
 </ul>
 
 <h4> Estrutura dos diretórios</h4>
-
+-     cypress
+      +---------e2e: aqui estão os arquivos com os teste que serão rodados.    
 -     src
       +---------assests
                 +-------images : nesse diretório estão todas as imagens uitlizadas na aplicação.
 
       +----------components : nesse diretório estão todos componentes utilizados na aplicação.
 
-      +----------contexts: nesse diretório estão centralizadas todas as variáveis da aplicação.
+      +----------contexts: nesse diretório estão centralizadas as pricipais variáveis da aplicação.
 
       +----------pages: nesse diretório estão todas as páginas da aplicação.
 
