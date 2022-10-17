@@ -1,4 +1,4 @@
-context("Login", () => {
+context("SingUp", () => {
   it("Enters the login page and tries to go to the register page", () => {
     cy.visit("http://localhost:3000");
     cy.viewport(1440, 900);
