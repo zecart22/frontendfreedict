@@ -1,12 +1,12 @@
-<h1>Front End Free Dict</h1>
+<h1>Front End Dictool</h1>
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/Kz8DQh7/DICTOOL-LOGO.png" alt="DICTOOL-LOGO" border="0"></a>
 
 <h2> Objetivo:</h2>
 
-<p>O projeto tem como objetivo principal possibilitar que o usuário consiga acessar um acervo de palavras em inglês e para cada palavra disponível verificar seu tipo, pronuncia, aplicação e etc</p>
+<p>O projeto tem como objetivo principal possibilitar que o usuário consiga acessar um acervo de palavras em inglês e para cada palavra disponível verificar seu tipo, pronuncia, aplicação e etc.</p>
 
-<p>Para poder acessar o dashboard e ultilizar as funcionalidades deverá ser feito um cadastro e posteriormente o longin </p>
+<p>Para poder acessar o dashboard e ultilizar as funcionalidades deverá ser feito um cadastro e posteriormente o login. </p>
 
 <a href="https://ibb.co/Fntyhsh"><img src="https://i.ibb.co/mS72RvR/wireframe-Free-Dict.png" alt="wireframe-Free-Dict" border="0"></a>
 
@@ -18,11 +18,11 @@
 
 <li> Listagem de todas as palavras do acervo : </li>
 
-<p> Ao acessar a página o usuário conseguirá ver em um quadro com com todas as palavras que estão no acervo. Esse quadro tem scroll infinito então ao chegar no final de cada lista serão renderizadas novas palavras.</p>
+<p> Ao acessar a página o usuário conseguirá ver um quadro com todas as palavras que estão no acervo. Esse quadro tem scroll infinito então ao chegar no final de cada lista serão renderizadas novas palavras.</p>
 
 <li> Consulta de cada palavra do acervo : </li>
 
-<p>No quandro onde estão os cards com cada palavra, basta dar um clique na palavra escolhida que ao lado teremos um card com todas as informações disponíveis da palavra.
+<p>No quadro onde estão os cards com cada palavra, basta dar um clique na palavra escolhida que ao lado teremos um card com todas as informações disponíveis da palavra.
 
 Obs1: Nem todas palavras terão todas as informações, porém a aplicação irá entregar todas que estiverem disponíveis.
 
@@ -30,29 +30,29 @@ Obs2: A aplicação carregará por padrão a lista com todas as palavras dispon�
 
 Obs3: Sempre que uma palavra for clicada será automaticamente inserida no histórico de palavras individual do usuário logado.
 
-Obs4: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de retornar na palavra anterior na lista e na próxima palavra da lista respectivamente.
+## Obs4: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de retornar na palavra anterior na lista e na próxima palavra da lista respectivamente.
 
 </p>
 
 <li> Adicionar palavras aos favoritos : </li>
 
-<p>Todo usuário poderá salvar cada palavra que desejar em uma seleção de favoritos, para tanto para clicar na palavra desejada e abaixo de suas informações háverá a opção de "favoritar" daí basta apenas um clique que a palavra está adiciona aos favoritos.
+<p>Todo usuário poderá salvar cada palavra que desejar em uma seleção de favoritos, para tanto basta clicar na palavra desejada e abaixo de suas informações haverá a opção de "favoritar" daí basta apenas um clique que a palavra estará adiciona aos favoritos.
 
 Obs: cada usuário terá sua lista individual de favoritos
 
-</p>
+## </p>
 
 <li> Ver todas as palavras dos favoritos : </li>
 
-<p>Basta clicar na aba "Favorites Words" que aparecerá uma lista com todas as palavras dentro dessa seção.
+<p>Basta clicar na aba "Favorites" que aparecerá uma lista com todas as palavras dentro dessa seção.
 
 Obs: cada usuário terá sua lista individual de favoritos
 
-</p>
+## </p>
 
 <li> Consulta de cada palavra dos favoritos : </li>
 
-<p>Clique na aba "Favorite Words", daí basta dar um clique na palavra escolhida que ao lado teremos um card com todas as informações disponíveis da palavra.
+<p>Clique na aba "Favorite", daí basta dar um clique na palavra escolhida que ao lado teremos um card com todas as informações disponíveis da palavra.
 
 Obs1: Nem todas palavras terão todas as informações, porém a aplicação irá entregar todas que estiverem disponíveis.
 
@@ -61,19 +61,19 @@ no histórico de palavras individual do usuário logado
 
 Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de retornar na palavra anterior na lista e na próxima palavra da lista respectivamente.
 
-</p>
+## </p>
 
 <li> Remover palavras da seção favoritos: </li>
 
-<p>Para remover a palavra da seção favoritos o usuário deverá clicar na aba favoritos logo acima do quadro onde estão os cards com as palavras, dentro da seção favoritos basta clicar na palavra que se deseja excluir no quadro ao lado logo abaixo das informações da palavra basta clicar em "defavoritar" que a palavra será excluida dos favoritos.
+<p>Para remover a palavra da seção favoritos o usuário deverá clicar na aba favoritos logo acima do quadro onde estão os cards com as palavras, dentro da seção favoritos basta clicar na palavra que se deseja excluir no quadro ao lado logo abaixo das informações da palavra basta clicar em "desfavoritar" que a palavra será excluída dos favoritos.
 
-</p>
+## </p>
 
 <li> Remover todas as palavras da seção favoritos: </li>
 
 <p>Basta clicar na na opção "Limpar Favoritos" que poderá remover todas as palavras que foram favoritadas até o momento.
 
-</p>
+## </p>
 
 <li> Ver todas as palavras do Histórico: </li>
 
