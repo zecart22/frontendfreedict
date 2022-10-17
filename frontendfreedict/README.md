@@ -87,7 +87,7 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
 
 </p>
 
-<a href="" title="deploy">Deploy da aplicação</a></br>
+<a href="https://dictool.vercel.app/" title="deploy">Deploy da aplicação</a></br>
 
 <h4> Clone do repositório </h4>
 
