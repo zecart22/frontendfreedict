@@ -1,4 +1,6 @@
-<h1>API Free Dict</h1>
+<h1>Front End Free Dict</h1>
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/Kz8DQh7/DICTOOL-LOGO.png" alt="DICTOOL-LOGO" border="0"></a>
 
 <h2> Objetivo:</h2>
 
@@ -153,3 +155,5 @@ Obs3: Existem dois botões: "voltar" e "proximo". Eles tem a funcionalidade de r
       +----------services: nesse diretório está localizada o link da API.
 
       +----------style: nesse diretório está localizado o Theme que trás todo padrão de estilização da aplicação.
+
+This is a challenge by Coodesh
